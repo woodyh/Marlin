@@ -106,8 +106,7 @@
 #endif
 
 // Common LCD messages
-
-  /* nothing here yet */
+#define MSG_M48_TEST                        "Probe Accuracy Test"
 
 // Common serial messages
 #define MSG_MARLIN "Marlin"

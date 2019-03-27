@@ -2680,6 +2680,13 @@ void lcd_quick_feedback(const bool clear_buttons) {
     #endif
 
     //
+    // Probe Accuracy Test
+    //
+    #if ENABLED(PROBE_ACCURACY_TEST)
+      MENU_ITEM(gcode, MSG_M48_TEST, PSTR("G28\nM48 P10"));
+    #endif
+
+    //
     // TMC Z Calibration
     //
     #if ENABLED(TMC_Z_CALIBRATION)
@@ -3314,7 +3321,7 @@ void lcd_quick_feedback(const bool clear_buttons) {
     lcd_completion_feedback();
   }
 
-  #if ENABLED(EEPROM_SETTINGS) && DISABLED(SLIM_LCD_MENUS)
+  #if ENABLED(EEPROM_SETTINGS)
 
     static void lcd_init_eeprom() {
       lcd_completion_feedback(settings.init_eeprom());
@@ -3364,7 +3371,10 @@ void lcd_quick_feedback(const bool clear_buttons) {
       MENU_ITEM(function, MSG_LOAD_EEPROM, lcd_load_settings);
     #endif
 
-    MENU_ITEM(function, MSG_RESTORE_FAILSAFE, lcd_factory_settings);
+    // This is effectively the same as doing a reset followed by a store.
+    #if DISABLED(SLIM_1284P)
+      MENU_ITEM(function, MSG_RESTORE_FAILSAFE, lcd_factory_settings);
+    #endif
 
     #if ENABLED(EEPROM_SETTINGS) && DISABLED(SLIM_LCD_MENUS)
       MENU_ITEM(submenu, MSG_INIT_EEPROM, lcd_init_eeprom_confirm);
@@ -3892,7 +3902,9 @@ void lcd_quick_feedback(const bool clear_buttons) {
         ;
 
         #if EXTRUDERS == 1
-          MENU_MULTIPLIER_ITEM_EDIT(float3, MSG_FILAMENT_UNLOAD, &filament_change_unload_length[0], 0, extrude_maxlength);
+          #if DISABLED(SLIM_LCD_MENUS)
+            MENU_MULTIPLIER_ITEM_EDIT(float3, MSG_FILAMENT_UNLOAD, &filament_change_unload_length[0], 0, extrude_maxlength);
+          #endif
         #else // EXTRUDERS > 1
           MENU_MULTIPLIER_ITEM_EDIT(float3, MSG_FILAMENT_UNLOAD, &filament_change_unload_length[active_extruder], 0, extrude_maxlength);
           MENU_MULTIPLIER_ITEM_EDIT(float3, MSG_FILAMENT_UNLOAD MSG_DIAM_E1, &filament_change_unload_length[0], 0, extrude_maxlength);
@@ -3909,7 +3921,9 @@ void lcd_quick_feedback(const bool clear_buttons) {
         #endif // EXTRUDERS > 1
 
         #if EXTRUDERS == 1
-          MENU_MULTIPLIER_ITEM_EDIT(float3, MSG_FILAMENT_LOAD, &filament_change_load_length[0], 0, extrude_maxlength);
+          #if DISABLED(SLIM_LCD_MENUS)
+            MENU_MULTIPLIER_ITEM_EDIT(float3, MSG_FILAMENT_LOAD, &filament_change_load_length[0], 0, extrude_maxlength);
+          #endif
         #else // EXTRUDERS > 1
           MENU_MULTIPLIER_ITEM_EDIT(float3, MSG_FILAMENT_LOAD, &filament_change_load_length[active_extruder], 0, extrude_maxlength);
           MENU_MULTIPLIER_ITEM_EDIT(float3, MSG_FILAMENT_LOAD MSG_DIAM_E1, &filament_change_load_length[0], 0, extrude_maxlength);
