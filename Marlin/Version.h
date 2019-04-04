@@ -43,6 +43,23 @@
    */
   #define DETAILED_BUILD_VERSION SHORT_BUILD_VERSION " (ender-3)"
 
+  #include "build_defs.h"
+  const unsigned char BUILD_TIME[] =
+  {
+      BUILD_YEAR_CH0, BUILD_YEAR_CH1, BUILD_YEAR_CH2, BUILD_YEAR_CH3,
+      '-',
+      BUILD_MONTH_CH0, BUILD_MONTH_CH1,
+      '-',
+      BUILD_DAY_CH0, BUILD_DAY_CH1,
+      'T',
+      BUILD_HOUR_CH0, BUILD_HOUR_CH1,
+      ':',
+      BUILD_MIN_CH0, BUILD_MIN_CH1,
+      ':',
+      BUILD_SEC_CH0, BUILD_SEC_CH1,
+      '\0'
+  };
+
   /**
    * The STRING_DISTRIBUTION_DATE represents when the binary file was built,
    * here we define this default string as the date where the latest release

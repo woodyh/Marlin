@@ -41,7 +41,7 @@
 #endif
 
 #ifndef WELCOME_MSG
-  #define WELCOME_MSG                         MACHINE_NAME _UxGT(" Ready.")
+  #define WELCOME_MSG                         MACHINE_NAME _UxGT(" ready")
 #endif
 #ifndef MSG_BACK
   #define MSG_BACK                            _UxGT("Back")
